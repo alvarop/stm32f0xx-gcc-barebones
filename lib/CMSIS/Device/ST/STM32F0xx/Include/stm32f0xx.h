@@ -5689,6 +5689,8 @@ typedef struct
 /**
   * @}
   */
+
+#define assert_param(expr) ((void)0)
   
 #ifdef __cplusplus
 }
