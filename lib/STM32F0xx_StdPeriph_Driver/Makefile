@@ -19,11 +19,11 @@ CFLAGS += -msoft-float
 CFLAGS += -ffreestanding -nostdlib
 
 # Includes
-CFLAGS += -Iinc -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMSIS/Device/ST/STM32L1xx/Include
+CFLAGS += -Iinc -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMSIS/Device/ST/STM32F0xx/Include
 
-# Default to STM32F0XX_MD if no device is passed
+# Default to STM32F072 if no device is passed
 ifeq ($(DEVICE_DEF), )
-DEVICE_DEF = STM32F0XX_MD
+DEVICE_DEF = STM32F072
 endif
 
 CFLAGS += -D$(DEVICE_DEF)

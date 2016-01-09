@@ -1,6 +1,6 @@
 # Sources
 
-SRCS = main.c startup_stm32l1xx.c
+SRCS = main.c startup_stm32f0xx.c
 SRCS += system_stm32f0xx.c stm32f0xx_it.c
 S_SRCS = 
 
@@ -29,9 +29,9 @@ LDFLAGS  = $(CPU) -mlittle-endian -mthumb-interwork -nostartfiles -Wl,--gc-secti
 
 CFLAGS += -msoft-float
 
-# Default to STM32F0XX_MD if no device is passed
+# Default to STM32F072 if no device is passed
 ifeq ($(DEVICE_DEF), )
-DEVICE_DEF = STM32F0XX_MD
+DEVICE_DEF = STM32F072
 endif
 
 CFLAGS += -D$(DEVICE_DEF)
@@ -47,7 +47,6 @@ LIBPATHS = -L$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/
 
 # Libraries to link
 LIBS = -lstdperiph -lc -lgcc -lnosys
-LIBS += -lusbcore
 
 # Extra includes
 INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/inc
