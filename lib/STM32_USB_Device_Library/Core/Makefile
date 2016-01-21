@@ -24,10 +24,10 @@ endif
 CFLAGS += -D$(DEVICE_DEF)
 
 # Sources
-SRCS = usb_core.c usb_dcd.c usb_dcd_int.c
+SRCS = usbd_core.c usbd_ioreq.c usbd_req.c
 
 OBJS = $(SRCS:.c=.o)
-LIBNAME = libusbcore.a
+LIBNAME = libusbdevcore.a
 
 all: $(LIBNAME)
 

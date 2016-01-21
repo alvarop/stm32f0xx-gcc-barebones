@@ -47,12 +47,17 @@ INCLUDE_PATHS = -I$(BASEDIR) -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMS
 
 # Library paths
 LIBPATHS = -L$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/
+LIBPATHS += -L$(BASEDIR)/lib/STM32_USB_Device_Driver/
+LIBPATHS += -L$(BASEDIR)/lib/STM32_USB_Device_Library/Core/
 
 # Libraries to link
 LIBS = -lstdperiph -lc -lgcc -lnosys
+LIBS += -lusbdevcore -lusbcore
 
 # Extra includes
 INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/inc
+INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Driver/inc
+INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Library/Core/inc
 
 #CFLAGS += -Map $(OUTPATH)/$(PROJ_NAME).map
 

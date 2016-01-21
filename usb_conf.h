@@ -32,15 +32,12 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f0xx.h"
-#include "stm32072b_eval.h"
+// #include "stm32072b_eval.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Select D+ pullup: internal or external */
-#ifdef USE_STM32072B_EVAL
- /* When using STM32072B_EVAL board the internal pullup must be enabled */
  #define INTERNAL_PULLUP
-#endif
 
 /* Define if Low power mode is enabled; it allows entering the device into STOP mode
     following USB Suspend event, and wakes up after the USB wakeup event is received. */
