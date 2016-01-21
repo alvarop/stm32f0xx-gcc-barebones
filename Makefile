@@ -2,6 +2,7 @@
 
 SRCS = main.c fifo.c console.c startup_stm32f0xx.c
 SRCS += system_stm32f0xx.c stm32f0xx_it.c
+SRCS += usbd_desc.c usbd_cdc_core.c usbd_cdc_vcp.c usb_bsp.c usbd_usr.c usbd_pwr.c
 S_SRCS = 
 
 # Project name
@@ -44,6 +45,8 @@ vpath %.a lib
 
 # Includes
 INCLUDE_PATHS = -I$(BASEDIR) -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMSIS/Device/ST/STM32F0xx/Include
+INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Driver/inc
+INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Library/Core/inc
 
 # Library paths
 LIBPATHS = -L$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/

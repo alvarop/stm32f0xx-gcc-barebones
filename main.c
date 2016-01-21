@@ -5,6 +5,8 @@
 #include "fifo.h"
 #include "stm32f0xx.h"
 #include "stm32f0xx_conf.h"
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
 
 #include "stm32f0xx_usart.h"
 
@@ -15,6 +17,8 @@ fifo_t txFifo;
 fifo_t rxFifo;
 static uint8_t outBuff[FIFO_BUFF_SIZE];
 static uint8_t inBuff[FIFO_BUFF_SIZE];
+
+USB_CORE_HANDLE  USB_Device_dev;
 
 volatile uint32_t tickMs = 0;
 
@@ -36,7 +40,6 @@ void init_uart() {
 
 	uartConfig.USART_BaudRate = 115200;
 	USART_Init(USART1, &uartConfig);
-
 
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 	USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
@@ -101,6 +104,13 @@ void init() {
 	GPIO_Init(GPIOB, &(GPIO_InitTypeDef){GPIO_Pin_2, GPIO_Mode_OUT, GPIO_Speed_2MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL});
 
 	init_uart();
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	GPIO_Init(GPIOA, &(GPIO_InitTypeDef){GPIO_Pin_15, GPIO_Mode_OUT, GPIO_Speed_2MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL});
+
+	USBD_Init(&USB_Device_dev,
+			&USR_desc,
+			&USBD_CDC_cb,
+			&USR_cb);
 }
 
 int main(void) {
