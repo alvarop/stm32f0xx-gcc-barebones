@@ -1,6 +1,6 @@
 # Sources
 
-SRCS = main.c startup_stm32f0xx.c
+SRCS = main.c fifo.c console.c startup_stm32f0xx.c
 SRCS += system_stm32f0xx.c stm32f0xx_it.c
 S_SRCS = 
 
@@ -24,6 +24,8 @@ LINKER_SCRIPT = stm32f072vb_flash.ld
 
 CPU = -mcpu=cortex-m0 -mthumb
 
+VERSION = $(shell git describe --dirty | sed 's/releases\///')
+
 CFLAGS  = $(CPU) -c -std=gnu99 -g -O2 -Wall
 LDFLAGS  = $(CPU) -mlittle-endian -mthumb-interwork -nostartfiles -Wl,--gc-sections,-Map=$(OUTPATH)/$(PROJ_NAME).map,--cref --specs=nano.specs
 
@@ -35,6 +37,7 @@ DEVICE_DEF = STM32F072
 endif
 
 CFLAGS += -D$(DEVICE_DEF)
+CFLAGS += -DFW_VERSION=\"$(VERSION)\"
 
 #vpath %.c src
 vpath %.a lib
