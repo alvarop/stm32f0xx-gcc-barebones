@@ -16,14 +16,14 @@
   *
   *        http://www.st.com/software_license_agreement_liberty_v2
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   * See the License for the specific language governing permissions and
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_usr.h"
@@ -38,7 +38,7 @@ USBD_Usr_cb_TypeDef USR_cb =
   USBD_USR_DeviceReset,
   USBD_USR_DeviceConfigured,
   USBD_USR_DeviceSuspended,
-  USBD_USR_DeviceResumed,  
+  USBD_USR_DeviceResumed,
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -49,8 +49,8 @@ USBD_Usr_cb_TypeDef USR_cb =
   * @retval None
   */
 void USBD_USR_Init(void)
-{   
-  
+{
+
 }
 
 /**

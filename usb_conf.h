@@ -16,8 +16,8 @@
   *
   *        http://www.st.com/software_license_agreement_liberty_v2
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   * See the License for the specific language governing permissions and
   * limitations under the License.
@@ -32,12 +32,11 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f0xx.h"
-// #include "stm32072b_eval.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Select D+ pullup: internal or external */
- #define INTERNAL_PULLUP
+ // #define INTERNAL_PULLUP
 
 /* Define if Low power mode is enabled; it allows entering the device into STOP mode
     following USB Suspend event, and wakes up after the USB wakeup event is received. */
@@ -48,7 +47,7 @@
 
 
 /* Endpoints used by the device */
-#define EP_NUM     (4)   /* EP0 + EP1 For CDC IN + 
+#define EP_NUM     (4)   /* EP0 + EP1 For CDC IN +
                            EP3 For CDC OUT +EP2 For CDC INT */
 
 /* buffer table base address */
@@ -59,7 +58,7 @@
 #define ENDP0_TX_ADDRESS   (0x80)
 
 /* EP2 Tx buffer base address */
-#define BULK_IN_TX_ADDRESS  (0xC0) 
+#define BULK_IN_TX_ADDRESS  (0xC0)
 
 /* EP2 Rx buffer base address */
 #define BULK_OUT_RX_ADDRESS (0x110)

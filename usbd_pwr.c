@@ -16,14 +16,14 @@
   *
   *        http://www.st.com/software_license_agreement_liberty_v2
   *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   * See the License for the specific language governing permissions and
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_pwr.h"
@@ -42,7 +42,7 @@ struct
 ResumeS;
 
  __IO uint32_t remotewakeupon=0;
- 
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -56,21 +56,21 @@ void Suspend(void)
   uint16_t wCNTR;
 
   /*Store CNTR value */
-  wCNTR = _GetCNTR();   
+  wCNTR = _GetCNTR();
   /* Set FSUSP bit in USB_CNTR register*/
   wCNTR |= CNTR_FSUSP;
   _SetCNTR(wCNTR);
-  
+
   /* force low-power mode in the macrocell */
   wCNTR = _GetCNTR();
   wCNTR |= CNTR_LPMODE;
   _SetCNTR(wCNTR);
-  
+
 #ifdef USB_DEVICE_LOW_PWR_MGMT_SUPPORT
-  
+
   /* enter system in STOP mode, only when wakeup flag in not set */
   if((_GetISTR()&ISTR_WKUP)==0)
-  { 
+  {
     /*Enter STOP mode with SLEEPONEXIT*/
     PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_SLEEPONEXIT);
   }
@@ -94,7 +94,7 @@ void Suspend(void)
 void Resume_Init(void)
 {
   uint16_t wCNTR;
-  
+
   /* ------------------ ONLY WITH BUS-POWERED DEVICES ---------------------- */
   /* restart the clocks */
   /* ...  */
@@ -102,8 +102,8 @@ void Resume_Init(void)
   /* CNTR_LPMODE = 0 */
   wCNTR = _GetCNTR();
   wCNTR &= (~CNTR_LPMODE);
-  _SetCNTR(wCNTR);    
-#ifdef USB_DEVICE_LOW_PWR_MGMT_SUPPORT   
+  _SetCNTR(wCNTR);
+#ifdef USB_DEVICE_LOW_PWR_MGMT_SUPPORT
   /* restore full power */
   /* ... on connected devices */
   Leave_LowPowerMode();
@@ -133,7 +133,7 @@ void Resume(RESUME_STATE eResumeSetVal)
   switch (ResumeS.eState)
   {
     case RESUME_EXTERNAL:
-      
+
 if (remotewakeupon ==0)
       {
         Resume_Init();
@@ -165,7 +165,7 @@ if (remotewakeupon ==0)
       ResumeS.eState = RESUME_ON;
       ResumeS.bESOFcnt = 10;
       break;
-    case RESUME_ON:    
+    case RESUME_ON:
       ResumeS.bESOFcnt--;
       if (ResumeS.bESOFcnt == 0)
       {
@@ -194,40 +194,40 @@ void Leave_LowPowerMode(void)
 #if defined USB_CLOCK_SOURCE_CRS
   /* Enable HSI48 oscillator */
   RCC_HSI48Cmd(ENABLE);
-  
+
   /* Wait till HSI48RDYF is set */
   while(RCC_GetFlagStatus(RCC_FLAG_HSI48RDY) == RESET)
   {
   }
   /* Select HSI48 as system clock source */
   RCC_SYSCLKConfig(RCC_SYSCLKSource_HSI48);
-  
+
 #else
 
   /* After wake-up from STOP mode restore system clock (system clock = PLL clock
   from HSE source )*/
   /* Enable HSE */
   RCC_HSEConfig(RCC_HSE_ON);
-  
+
   /* Wait till HSE is ready */
   while (RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET)
   {}
-  
+
   /* Enable PLL */
   RCC_PLLCmd(ENABLE);
-  
+
   /* Wait till PLL is ready */
   while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET)
   {}
-  
+
   /* Select PLL as system clock source */
   RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
-  
+
   /* Wait till PLL is used as system clock source */
   while (RCC_GetSYSCLKSource() != 0x08)
-  {} 
+  {}
 #endif /* USB_CLOCK_SOURCE_CRS */
-  
+
   /*Low Power Sleep on Exit Disabled*/
   NVIC_SystemLPConfig(NVIC_LP_SLEEPONEXIT, DISABLE);
 }
