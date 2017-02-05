@@ -1,9 +1,23 @@
 # Sources
 
-SRCS = main.c fifo.c console.c startup_stm32f0xx.c
-SRCS += system_stm32f0xx.c stm32f0xx_it.c
-SRCS += usbd_desc.c usbd_cdc_core.c usbd_cdc_vcp.c usb_bsp.c usbd_usr.c usbd_pwr.c
-S_SRCS = 
+# Main sources
+SRCS = 		main.c \
+			fifo.c \
+			console.c
+
+# System sources
+SRCS += 	system_stm32f0xx.c \
+			stm32f0xx_it.c \
+			startup_stm32f0xx.c
+
+# USB sources
+USB_SRCS += usb/usbd_desc.c \
+			usb/usbd_cdc_core.c \
+			usb/usbd_cdc_vcp.c \
+			usb/usb_bsp.c \
+			usb/usbd_usr.c \
+			usb/usbd_pwr.c
+S_SRCS =
 
 # Project name
 
@@ -61,15 +75,17 @@ LIBS += -lusbdevcore -lusbcore
 INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/inc
 INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Driver/inc
 INCLUDE_PATHS += -I$(BASEDIR)/lib/STM32_USB_Device_Library/Core/inc
+INCLUDE_PATHS += -I$(BASEDIR)/usb
 
 #CFLAGS += -Map $(OUTPATH)/$(PROJ_NAME).map
 
 OBJS = $(SRCS:.c=.o)
+OBJS += $(USB_SRCS:.c=.o)
 OBJS += $(S_SRCS:.s=.o)
 
 ###################################################
 
-.PHONY: lib proj
+.PHONY: directories lib proj
 
 all: lib proj
 	$(SIZE) $(OUTPATH)/$(PROJ_NAME).elf
@@ -83,6 +99,7 @@ proj: $(OUTPATH)/$(PROJ_NAME).elf
 	$(AS) $(CPU) -o $(addprefix $(OUTPATH)/, $@) $<
 
 .c.o:
+	mkdir -p $(dir $(addprefix  $(OUTPATH)/, $@))
 	$(CC) $(CFLAGS) -std=gnu99 $(INCLUDE_PATHS) -o $(addprefix  $(OUTPATH)/, $@) $<
 
 $(OUTPATH)/$(PROJ_NAME).elf: $(OBJS)
@@ -93,11 +110,12 @@ $(OUTPATH)/$(PROJ_NAME).elf: $(OBJS)
 
 clean:
 	rm -f $(OUTPATH)/*.o
+	rm -f $(OUTPATH)/usb/*.o
 	rm -f $(OUTPATH)/$(PROJ_NAME).elf
 	rm -f $(OUTPATH)/$(PROJ_NAME).hex
 	rm -f $(OUTPATH)/$(PROJ_NAME).bin
 	rm -f $(OUTPATH)/$(PROJ_NAME).dis
 	rm -f $(OUTPATH)/$(PROJ_NAME).map
-	# Remove this line if you don't want to clean the libs as well
+# Remove this line if you don't want to clean the libs as well
 	$(MAKE) clean -C lib
-	
+

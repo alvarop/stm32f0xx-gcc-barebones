@@ -67,4 +67,3 @@ $(LIBNAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(LIBNAME)
-	

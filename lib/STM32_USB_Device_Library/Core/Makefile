@@ -12,7 +12,7 @@ CFLAGS += -msoft-float
 CFLAGS += -ffreestanding -nostdlib
 
 # Includes
-CFLAGS += -Iinc -I$(BASEDIR) -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMSIS/Device/ST/STM32F0xx/Include -I$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/inc
+CFLAGS += -Iinc -I$(BASEDIR) -I$(BASEDIR)/usb -I$(BASEDIR)/lib/CMSIS/Include -I$(BASEDIR)/lib/CMSIS/Device/ST/STM32F0xx/Include -I$(BASEDIR)/lib/STM32F0xx_StdPeriph_Driver/inc
 CFLAGS += -I$(BASEDIR)/lib/STM32_USB_Device_Driver/inc
 CFLAGS += -I$(BASEDIR)/lib/STM32_USB_Device_Library/Core/inc
 
@@ -39,4 +39,3 @@ $(LIBNAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(LIBNAME)
-	
